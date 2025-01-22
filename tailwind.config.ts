@@ -22,11 +22,20 @@ export default {
         sans: ["Inter", "system-ui", "sans-serif"],
       },
       colors: {
-        border: "hsl(var(--border))",
+        border: {
+          DEFAULT: "hsl(var(--border))",
+          dark: "hsl(var(--border-dark))",
+        },
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        background: {
+          DEFAULT: "hsl(var(--background))",
+          dark: "hsl(var(--background-dark))",
+        },
+        foreground: {
+          DEFAULT: "hsl(var(--foreground))",
+          dark: "hsl(var(--foreground-dark))",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
