@@ -10,7 +10,7 @@ export const AboutMe = () => {
     >
       <div className="flex flex-col md:flex-row gap-6 items-center">
         <img
-          src="/lovable-uploads/ca8e8ba3-b95f-435a-803f-beeb3e6767ed.png"
+          src="/lovable-uploads/43e081cb-adc0-4aa0-a165-8c6c13be19fd.png"
           alt="Анатолий Холоденко"
           className="w-32 h-32 rounded-full object-cover"
         />
