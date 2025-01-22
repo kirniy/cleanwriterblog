@@ -1,6 +1,7 @@
 import { Menu, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   const { theme, toggleTheme } = useTheme();
@@ -9,18 +10,18 @@ export const Header = () => {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
         <div className="mr-4 flex">
-          <a href="/" className="mr-6 flex items-center space-x-2">
+          <Link to="/" className="mr-6 flex items-center space-x-2">
             <span className="text-xl font-bold">Анатолий Холоденко</span>
-          </a>
+          </Link>
         </div>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-6">
-            <a href="/archive" className="text-sm font-medium transition-colors hover:text-primary">
+            <Link to="/archive" className="text-sm font-medium transition-colors hover:text-primary">
               Архив
-            </a>
-            <a href="/tags" className="text-sm font-medium transition-colors hover:text-primary">
+            </Link>
+            <Link to="/tags" className="text-sm font-medium transition-colors hover:text-primary">
               Теги
-            </a>
+            </Link>
             <Button
               variant="ghost"
               size="icon"
