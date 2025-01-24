@@ -38,7 +38,6 @@ const NewPost = () => {
           class: 'rounded-lg max-w-full mx-auto my-4',
         },
         allowBase64: true,
-        draggable: true,
       }),
       Link.configure({
         openOnClick: false,
