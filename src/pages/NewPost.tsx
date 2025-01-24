@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
 import { toast } from "sonner";
 
 const NewPost = () => {
