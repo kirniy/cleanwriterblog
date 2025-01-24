@@ -23,9 +23,10 @@ const NewPost = () => {
         allowBase64: true,
       }),
     ],
+    content: '',
     editorProps: {
       attributes: {
-        class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none',
+        class: 'min-h-[300px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
       },
     },
   });
@@ -45,6 +46,7 @@ const NewPost = () => {
           .getPublicUrl(data.path);
 
         editor?.chain().focus().setImage({ src: publicUrl }).run();
+        toast.success('Изображение успешно загружено');
       } catch (error) {
         console.error('Error uploading image:', error);
         toast.error('Ошибка при загрузке изображения');
@@ -104,15 +106,34 @@ const NewPost = () => {
                 Содержание
               </label>
               <div className="border rounded-md p-4">
-                <div className="mb-4">
-                  <input
+                <div className="flex items-center gap-2 mb-4">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => editor?.chain().focus().toggleBold().run()}
+                    className={editor?.isActive('bold') ? 'bg-secondary' : ''}
+                  >
+                    Жирный
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => editor?.chain().focus().toggleItalic().run()}
+                    className={editor?.isActive('italic') ? 'bg-secondary' : ''}
+                  >
+                    Курсив
+                  </Button>
+                  <div className="flex-1" />
+                  <Input
                     type="file"
                     accept="image/*"
                     onChange={handleImageUpload}
-                    className="text-sm"
+                    className="max-w-[200px]"
                   />
                 </div>
-                <EditorContent editor={editor} className="min-h-[300px]" />
+                <EditorContent editor={editor} />
               </div>
             </div>
             <div className="space-y-2">
