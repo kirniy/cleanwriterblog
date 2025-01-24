@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import DOMPurify from "dompurify";
 
 interface PostCardProps {
   title: string;
@@ -6,9 +7,10 @@ interface PostCardProps {
   date: string;
   tags: string[];
   imageUrl?: string;
+  content?: string;
 }
 
-export const PostCard = ({ title, excerpt, date, tags, imageUrl }: PostCardProps) => {
+export const PostCard = ({ title, excerpt, date, tags, imageUrl, content }: PostCardProps) => {
   return (
     <motion.article 
       initial={{ opacity: 0, y: 20 }}
@@ -23,7 +25,7 @@ export const PostCard = ({ title, excerpt, date, tags, imageUrl }: PostCardProps
           className="w-full h-48 object-cover rounded-lg mb-4"
         />
       )}
-      <div className="space-y-2">
+      <div className="space-y-4">
         <div className="flex gap-2 flex-wrap">
           {tags.map((tag) => (
             <a key={tag} href={`/tags/${tag}`} className="tag">
@@ -36,8 +38,13 @@ export const PostCard = ({ title, excerpt, date, tags, imageUrl }: PostCardProps
             {title}
           </a>
         </h2>
-        <p className="text-muted-foreground">{excerpt}</p>
-        <time className="text-sm text-muted-foreground">{date}</time>
+        <div 
+          className="prose prose-sm dark:prose-invert max-w-none"
+          dangerouslySetInnerHTML={{ 
+            __html: DOMPurify.sanitize(content || excerpt) 
+          }}
+        />
+        <time className="text-sm text-muted-foreground block">{date}</time>
       </div>
     </motion.article>
   );
