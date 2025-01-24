@@ -4,24 +4,23 @@ import { AboutMe } from "@/components/AboutMe";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Link } from "react-router-dom";
-
-const SAMPLE_POSTS = [
-  {
-    title: "Размышления о современной литературе",
-    excerpt: "В этой статье я рассматриваю основные тенденции развития современной литературы и их влияние на общество.",
-    date: "15 марта 2024",
-    tags: ["Литература", "Анализ"],
-    imageUrl: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?ixlib=rb-4.0.1"
-  },
-  {
-    title: "Искусство письма в цифровую эпоху",
-    excerpt: "Как меняется процесс написания текстов в век технологий и социальных сетей?",
-    date: "10 марта 2024",
-    tags: ["Творчество", "Технологии"],
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/lib/supabase";
 
 const Index = () => {
+  const { data: posts, isLoading } = useQuery({
+    queryKey: ['posts'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('posts')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      return data;
+    }
+  });
+
   return (
     <div className="min-h-screen flex flex-col dark:bg-background-dark dark:text-foreground-dark">
       <Header />
@@ -40,9 +39,22 @@ const Index = () => {
             </Button>
           </div>
           <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
-            {SAMPLE_POSTS.map((post, index) => (
-              <PostCard key={index} {...post} />
-            ))}
+            {isLoading ? (
+              <p>Загрузка...</p>
+            ) : posts && posts.length > 0 ? (
+              posts.map((post) => (
+                <PostCard
+                  key={post.id}
+                  title={post.title}
+                  excerpt={post.excerpt || post.content.substring(0, 150) + '...'}
+                  date={new Date(post.created_at).toLocaleDateString('ru-RU')}
+                  tags={post.tags || []}
+                  imageUrl={post.cover_image}
+                />
+              ))
+            ) : (
+              <p className="text-muted-foreground">Пока нет записей</p>
+            )}
           </div>
         </section>
       </main>
